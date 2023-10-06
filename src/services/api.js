@@ -140,9 +140,70 @@ export const getTopRatedShows = async () => {
   }
 };
 
-export const getDetails = async (id) => {
+export const getMultiSearch = async (query) => {
+  const options = {
+    url: `${API_URL}/search/multi`,
+    method: "GET",
+    params: { language: API_LANG, query },
+    headers: headerOptions,
+  };
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getMovieSearch = async (query) => {
+  const options = {
+    url: `${API_URL}/search/movie`,
+    method: "GET",
+    params: { language: API_LANG, query },
+    headers: headerOptions,
+  };
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getTVSearch = async (query) => {
+  const options = {
+    url: `${API_URL}/search/tv`,
+    method: "GET",
+    params: { language: API_LANG, query },
+    headers: headerOptions,
+  };
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getMovieDetails = async (id) => {
   const options = {
     url: `${API_URL}/movie/${id}`,
+    method: "GET",
+    params: { language: API_LANG },
+    headers: headerOptions,
+  };
+  try {
+    const response = await axios.request(options);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getShowDetails = async (id) => {
+  const options = {
+    url: `${API_URL}/tv/${id}`,
     method: "GET",
     params: { language: API_LANG },
     headers: headerOptions,

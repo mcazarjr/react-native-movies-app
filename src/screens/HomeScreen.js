@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { ScrollView, View } from "react-native";
 
 import {
   getNowPlayingMovies,
@@ -8,7 +8,7 @@ import {
   getUpcomingMovies,
 } from "../services/api";
 import Loader from "../components/Loader";
-import MovieList from "../components/MovieList";
+import Lists from "../components/Lists";
 import Picker from "../components/Picker";
 
 const HomeScreen = () => {
@@ -59,6 +59,7 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
+    let result;
     setIsLoading(true);
     switch (selected) {
       case "now_playing":
@@ -80,19 +81,22 @@ const HomeScreen = () => {
   }, [selected]);
 
   return (
-    <View style={{ backgroundColor: "#FFF" }}>
+    <ScrollView style={{ backgroundColor: "#FFF", paddingTop: 40 }}>
       <Picker
         data={selections}
         handleSelection={handleSelection}
       />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <View>
-          <MovieList movies={movies} />
+
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <View style={{ paddingTop: 35 }}>
+          <Lists
+            items={movies}
+            itemsType="movies"
+          />
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

@@ -5,7 +5,7 @@ import { API_IMG_URL, API_IMG_URL_w342 } from "../config/apiConfig";
 const DetailedItem = ({ item }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.title}>{item.title ? item.title : item.name}</Text>
       <View style={styles.detail_container}>
         <Image
           source={{

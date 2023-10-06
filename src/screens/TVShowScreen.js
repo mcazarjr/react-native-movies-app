@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
 import {
   getAiringTodayShow,
@@ -10,7 +10,7 @@ import {
 
 import Picker from "../components/Picker";
 import Loader from "../components/Loader";
-import TVShowList from "../components/TVShowList";
+import Lists from "../components/Lists";
 
 const TVShowScreen = () => {
   const [shows, setShows] = useState([]);
@@ -81,20 +81,22 @@ const TVShowScreen = () => {
   }, [selected]);
 
   return (
-    <View style={{ backgroundColor: "#FFF" }}>
+    <ScrollView style={{ backgroundColor: "#FFF", paddingTop: 40 }}>
       <Picker
         data={selections}
         handleSelection={handleSelection}
         initial={2}
       />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <View>
-          <TVShowList shows={shows} />
+      {isLoading && <Loader />}
+      {!isLoading && (
+        <View style={{ paddingTop: 35 }}>
+          <Lists
+            items={shows}
+            itemsType="shows"
+          />
         </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 

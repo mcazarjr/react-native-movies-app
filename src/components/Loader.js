@@ -13,7 +13,6 @@ const Loader = () => {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    height: "80%",
     alignItems: "center",
     justifyContent: "center",
   },

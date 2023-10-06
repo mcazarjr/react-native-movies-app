@@ -1,22 +1,33 @@
-import { Text } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 
-import { getDetails } from "../services/api";
 import Loader from "../components/Loader";
 import DetailedItem from "../components/DetailedItem";
+import { getMovieDetails, getShowDetails } from "../services/api";
 
 const DetailsScreen = (props) => {
   const { params } = useRoute();
-  const id = params?.ID;
-  const title = params?.title;
+  const id = params?.id;
+  const type = params?.type;
 
   const [item, setItem] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchMovie = async () => {
+  const fetchDetails = async (type) => {
     try {
-      const response = await getDetails(id);
+      let response;
+      switch (type) {
+        case "movies":
+          response = await getMovieDetails(id);
+          break;
+        case "shows":
+          response = await getShowDetails(id);
+          break;
+        default:
+          console.log("Unknown type");
+          break;
+      }
       if (response) {
         setItem(response);
         setIsLoading(false);
@@ -26,7 +37,7 @@ const DetailsScreen = (props) => {
     }
   };
 
-  const setTitle = () => {
+  const setTitle = (title) => {
     props.navigation.setOptions({
       title: `${title}`,
       headerBackTitle: "Back to List",
@@ -34,11 +45,29 @@ const DetailsScreen = (props) => {
   };
 
   useEffect(() => {
+    fetchDetails(type);
     setTitle();
-    fetchMovie();
   }, []);
 
-  return <>{isLoading ? <Loader /> : <DetailedItem item={item} />}</>;
+  useEffect(() => {
+    if (item) {
+      setTitle(item.title ? item.title : item.name);
+    }
+  }, [item]);
+
+  return (
+    <View style={styles.container}>
+      {isLoading && <Loader />}
+      {!isLoading && <DetailedItem item={item} />}
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#fff",
+    height: "100%",
+  },
+});
 
 export default DetailsScreen;

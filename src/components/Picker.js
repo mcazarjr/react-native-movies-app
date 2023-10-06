@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { Dropdown } from "react-native-element-dropdown";
+import { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { useActionSheet } from "@expo/react-native-action-sheet";
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 30,
   },
   sub_container: {
     display: "flex",

@@ -4,13 +4,13 @@ import {
   Image,
   ScrollView,
   TouchableWithoutFeedback,
-  Pressable,
   StyleSheet,
 } from "react-native";
 
 import { API_IMG_URL, API_IMG_URL_w185 } from "../config/apiConfig";
+import Button from "./Button";
 
-const Item = ({ type, data, onPress }) => {
+const Item = ({ data, onPress }) => {
   return (
     <View style={styles.card_container}>
       <Image
@@ -20,19 +20,15 @@ const Item = ({ type, data, onPress }) => {
         style={{ width: 100, height: 100 }}
       />
       <View style={styles.card_description}>
-        <Text style={styles.title}>
-          {type === "movie" ? data.title : data.name}
-        </Text>
+        <Text style={styles.title}>{data.title ? data.title : data.name}</Text>
         <Text style={styles.description}>Popularity: {data.popularity}</Text>
         <Text style={styles.description}>
           Release Date: {data.release_date}
         </Text>
-        <Pressable
+        <Button
           onPress={onPress}
-          style={styles.touchable}
-        >
-          <Text style={styles.touchable_text}>More Details</Text>
-        </Pressable>
+          label={"More Details"}
+        />
       </View>
     </View>
   );
@@ -45,7 +41,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     gap: 8,
-    padding: 8,
+    paddingLeft: 15,
+    paddingVertical: 10,
+    width: "90%",
   },
   card_description: {
     flex: 1,
@@ -60,21 +58,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 13,
     color: "#333",
-  },
-  touchable: {
-    flex: 1,
-    flexDirection: "row",
-    backgroundColor: "#18ACCC",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 4,
-    minHeight: 30,
-    maxHeight: 30,
-    width: "90%",
-  },
-  touchable_text: {
-    color: "#fff",
-    fontSize: 13,
   },
 });
 
