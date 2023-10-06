@@ -17,14 +17,16 @@ const HomeScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const selections = [
+    { key: "spacer1", value: "spacer" },
     { key: "now_playing", value: "Now Playing" },
     { key: "popular", value: "Popular" },
     { key: "top_rated", value: "Top Rated" },
     { key: "upcoming", value: "Upcoming" },
+    { key: "spacer2", value: "spacer" },
   ];
 
   const handleSelection = (item) => {
-    setSelected(selections[item].key);
+    setSelected(item.value);
   };
 
   const fetchMovies = async (type) => {
@@ -85,6 +87,7 @@ const HomeScreen = () => {
       <Picker
         data={selections}
         handleSelection={handleSelection}
+        initial={1}
       />
 
       {isLoading && <Loader />}

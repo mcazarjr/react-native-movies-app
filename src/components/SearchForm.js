@@ -12,12 +12,14 @@ const SearchForm = ({
   selectionChangeHandler,
 }) => {
   const selections = [
+    { key: "spacer1", value: "spacer" },
     { key: "movie", value: "Movies" },
     { key: "multi", value: "Multi" },
     { key: "tv", value: "TV Shows" },
+    { key: "spacer2", value: "spacer" },
   ];
   const handleSelection = (item) => {
-    selectionChangeHandler(selections[item].key);
+    selectionChangeHandler(item);
   };
 
   return (
@@ -40,7 +42,7 @@ const SearchForm = ({
         <Picker
           data={selections}
           handleSelection={handleSelection}
-          initial={1}
+          initial={2}
         />
         <Button
           onPress={onFormSubmitHandler}

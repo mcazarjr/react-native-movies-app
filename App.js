@@ -7,11 +7,9 @@ import Navigator from "./src/utils/Navigator";
 
 export default function App() {
   return (
-    <ActionSheetProvider>
-      <SafeAreaProvider>
-        <StatusBar style="auto" />
-        <Navigator />
-      </SafeAreaProvider>
-    </ActionSheetProvider>
+    <SafeAreaProvider>
+      <StatusBar style="auto" />
+      <Navigator />
+    </SafeAreaProvider>
   );
 }

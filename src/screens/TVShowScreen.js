@@ -18,14 +18,16 @@ const TVShowScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const selections = [
+    { key: "spacer5", value: "spacer" },
     { key: "airing_today", value: "Airing Today" },
     { key: "on_the_air", value: "On the Air" },
     { key: "Popular", value: "Popular" },
     { key: "top_rated", value: "Top Rated" },
+    { key: "spacer6", value: "spacer" },
   ];
 
   const handleSelection = (item) => {
-    setSelected(selections[item].key);
+    setSelected(item.value);
   };
 
   const fetchShows = async (type) => {
@@ -85,7 +87,7 @@ const TVShowScreen = () => {
       <Picker
         data={selections}
         handleSelection={handleSelection}
-        initial={2}
+        initial={3}
       />
       {isLoading && <Loader />}
       {!isLoading && (

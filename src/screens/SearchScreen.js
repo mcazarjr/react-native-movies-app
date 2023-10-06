@@ -22,7 +22,7 @@ const SearchScreen = () => {
   };
 
   const selectionChangeHandler = (item) => {
-    setSelected(item);
+    setSelected(item.value);
   };
 
   const onFormSubmitHandler = () => {

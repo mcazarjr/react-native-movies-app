@@ -1,30 +1,26 @@
 import { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useActionSheet } from "@expo/react-native-action-sheet";
+import { BottomSheet, ListItem } from "@rneui/themed";
+import PickerItem from "./PickerItem";
 
 const Picker = ({ data, handleSelection, initial }) => {
-  const { showActionSheetWithOptions } = useActionSheet();
-  const processedData = data.map((item) => item.value);
+  // const { showActionSheetWithOptions } = useActionSheet();
+  const [isVisible, setIsVisible] = useState(false);
+  // const processedData = data.map((item) => item.value);
   const [selected, setSelected] = useState(initial ? data[initial] : data[0]);
 
-  const handleTouch = () => {
-    showActionSheetWithOptions(
-      {
-        options: processedData,
-      },
-      (buttonIndex) => {
-        setSelected(data[buttonIndex]);
-        handleSelection(buttonIndex);
-      }
-    );
+  const handleTouch = (data) => {
+    setIsVisible(false);
+    setSelected(data);
+    handleSelection(data);
   };
 
   return (
     <View style={styles.container}>
       <Pressable
         style={styles.sub_container}
-        onPress={handleTouch}
+        onPress={() => setIsVisible(true)}
       >
         <Text style={styles.text}>{selected?.value}</Text>
         <AntDesign
@@ -33,6 +29,23 @@ const Picker = ({ data, handleSelection, initial }) => {
           color="#333"
         />
       </Pressable>
+      <BottomSheet
+        containerStyle={{
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          borderWidth: 1,
+        }}
+        isVisible={isVisible}
+        onClose={() => setIsVisible(false)}
+      >
+        {data.map((option) => (
+          <PickerItem
+            key={option.key}
+            item={option}
+            onPress={handleTouch}
+            isActive={selected.key === option.key}
+          />
+        ))}
+      </BottomSheet>
     </View>
   );
 };
