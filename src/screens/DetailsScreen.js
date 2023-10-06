@@ -2,8 +2,8 @@ import { Text } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 
-import { getMovieDetails } from "../services/api";
-import Loader from "../layout/Loader";
+import { getDetails } from "../services/api";
+import Loader from "../components/Loader";
 import DetailedItem from "../components/DetailedItem";
 
 const DetailsScreen = (props) => {
@@ -16,7 +16,7 @@ const DetailsScreen = (props) => {
 
   const fetchMovie = async () => {
     try {
-      const response = await getMovieDetails(id);
+      const response = await getDetails(id);
       if (response) {
         setItem(response);
         setIsLoading(false);

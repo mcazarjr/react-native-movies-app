@@ -38,14 +38,14 @@ export default function Navigator() {
                 options={{ tabBarLabel: "Movies" }}
               />
               <Tab.Screen
+                name="Search"
+                component={SearchScreen}
+                options={{ tabBarLabel: "Search Results" }}
+              />
+              <Tab.Screen
                 name="TV Show"
                 component={TVShowScreen}
                 options={{ tabBarLabel: "TV Shows" }}
-              />
-              <Tab.Screen
-                name="Search"
-                component={SearchScreen}
-                options={{ tabBarLabel: "Search" }}
               />
             </Tab.Navigator>
           )}

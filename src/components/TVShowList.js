@@ -3,29 +3,29 @@ import { ScrollView, View, Text } from "react-native";
 import Item from "./Item";
 import { useNavigation } from "@react-navigation/native";
 
-const MovieList = ({ movies }) => {
+const TVShowList = ({ shows }) => {
   const navigation = useNavigation();
 
-  const nagivateToDetails = (movieID, movieTitle) => {
+  const nagivateToDetails = (showID, showTitle) => {
     navigation.navigate("Details", { ID: movieID, title: movieTitle });
   };
 
   return (
     <ScrollView>
-      {movies && movies.length > 0 ? (
-        movies.map((movie) => (
+      {shows && shows.length > 0 ? (
+        shows.map((show) => (
           <Item
-            key={movie.id}
-            type={"movie"}
-            data={movie}
-            onPress={() => nagivateToDetails(movie.id, movie.title)}
+            key={show.id}
+            type="TVShow"
+            data={show}
+            onPress={() => nagivateToDetails(show.id, show.title)}
           />
         ))
       ) : (
-        <Text>No movies available</Text>
+        <Text>No TV Shows available</Text>
       )}
     </ScrollView>
   );
 };
 
-export default MovieList;
+export default TVShowList;

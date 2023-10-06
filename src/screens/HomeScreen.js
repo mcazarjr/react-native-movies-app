@@ -1,20 +1,55 @@
 import { useState, useEffect } from "react";
-import { View, ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
 
-import { getNowPlayingMovies } from "../services/api";
-import MovieItem from "../components/MovieItem";
-import Loader from "../layout/Loader";
+import {
+  getNowPlayingMovies,
+  getPopularMovies,
+  getTopRatedMovies,
+  getUpcomingMovies,
+} from "../services/api";
+import Loader from "../components/Loader";
 import MovieList from "../components/MovieList";
+import Picker from "../components/Picker";
 
 const HomeScreen = () => {
   const [movies, setMovies] = useState([]);
+  const [selected, setSelected] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchMovies = async () => {
+  const selections = [
+    { key: "now_playing", value: "Now Playing" },
+    { key: "popular", value: "Popular" },
+    { key: "top_rated", value: "Top Rated" },
+    { key: "upcoming", value: "Upcoming" },
+  ];
+
+  const handleSelection = (item) => {
+    setSelected(selections[item].key);
+  };
+
+  const fetchMovies = async (type) => {
     try {
-      const movies = await getNowPlayingMovies();
-      if (movies && movies.results) {
-        setMovies(movies.results);
+      let data;
+      switch (type) {
+        case "now_playing":
+          data = await getNowPlayingMovies();
+          break;
+        case "popular":
+          data = await getPopularMovies();
+          break;
+        case "top_rated":
+          data = await getTopRatedMovies();
+          break;
+        case "upcoming":
+          data = await getUpcomingMovies();
+          break;
+        default:
+          data = await getNowPlayingMovies();
+          break;
+      }
+
+      if (data && data.results) {
+        setMovies(data.results);
         setIsLoading(false);
       }
     } catch (error) {
@@ -24,10 +59,41 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    setIsLoading(true);
+    switch (selected) {
+      case "now_playing":
+        result = fetchMovies("now_playing");
+        break;
+      case "popular":
+        result = fetchMovies("popular");
+        break;
+      case "top_rated":
+        result = fetchMovies("top_rated");
+        break;
+      case "upcoming":
+        result = fetchMovies("upcoming");
+        break;
+      default:
+        result = fetchMovies("now_playing");
+        break;
+    }
+  }, [selected]);
 
-  return <>{isLoading ? <Loader /> : <MovieList movies={movies} />}</>;
+  return (
+    <View style={{ backgroundColor: "#FFF" }}>
+      <Picker
+        data={selections}
+        handleSelection={handleSelection}
+      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <View>
+          <MovieList movies={movies} />
+        </View>
+      )}
+    </View>
+  );
 };
 
 export default HomeScreen;

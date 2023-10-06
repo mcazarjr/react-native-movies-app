@@ -10,20 +10,22 @@ import {
 
 import { API_IMG_URL, API_IMG_URL_w185 } from "../config/apiConfig";
 
-const MovieItem = ({ movie, onPress }) => {
+const Item = ({ type, data, onPress }) => {
   return (
     <View style={styles.card_container}>
       <Image
         source={{
-          uri: `${API_IMG_URL_w185}${movie.poster_path}`,
+          uri: `${API_IMG_URL_w185}${data.poster_path}`,
         }}
         style={{ width: 100, height: 100 }}
       />
       <View style={styles.card_description}>
-        <Text style={styles.title}>{movie.title}</Text>
-        <Text style={styles.description}>Popularity: {movie.popularity}</Text>
+        <Text style={styles.title}>
+          {type === "movie" ? data.title : data.name}
+        </Text>
+        <Text style={styles.description}>Popularity: {data.popularity}</Text>
         <Text style={styles.description}>
-          Release Date: {movie.release_date}
+          Release Date: {data.release_date}
         </Text>
         <Pressable
           onPress={onPress}
@@ -41,6 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     backgroundColor: "#fff",
+    alignItems: "center",
     gap: 8,
     padding: 8,
   },
@@ -65,6 +68,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 4,
+    minHeight: 30,
+    maxHeight: 30,
     width: "90%",
   },
   touchable_text: {
@@ -73,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MovieItem;
+export default Item;
